@@ -1,0 +1,21 @@
+ CREATE TYPE "public"."auditstate_enum" AS ENUM ('Completed', 'Due', 'Overdue');
+ CREATE TYPE "public"."beneregister_enum" AS ENUM ('Complete', 'Pending', 'Partial');
+ CREATE TYPE "public"."compliancestate_enum" AS ENUM ('Partial', 'Compliant', 'Non-Compliant');
+ CREATE TYPE "public"."contingencyplanstage_enum" AS ENUM ('Overdue', 'Due', 'Updated');
+ CREATE TYPE "public"."coordeffectlvl_enum" AS ENUM ('Medium', 'Low', 'High');
+ CREATE TYPE "public"."diseaserisk_enum" AS ENUM ('High', 'Medium', 'Low');
+ CREATE TYPE "public"."emerglevel_enum" AS ENUM ('Black', 'Orange', 'Red', 'Yellow');
+ CREATE TYPE "public"."evaluationstage_enum" AS ENUM ('Overdue', 'Due', 'Current');
+ CREATE TYPE "public"."haztype_enum" AS ENUM ('Wildfire', 'Earthquake', 'Tsunami', 'Flood', 'Hurricane');
+ CREATE TYPE "public"."infosharingstate_enum" AS ENUM ('Poor', 'Limited', 'Effective');
+ CREATE TYPE "public"."lessonslearnedstage_enum" AS ENUM ('In Progress', 'Documented', 'Pending');
+ CREATE TYPE "public"."mediacoversentiment_enum" AS ENUM ('Positive', 'Neutral', 'Negative');
+ CREATE TYPE "public"."medicalemergencycapacity_enum" AS ENUM ('Adequate', 'Critical', 'Limited');
+ CREATE TYPE "public"."priorityrank_enum" AS ENUM ('High', 'Medium', 'Low', 'Critical');
+ CREATE TYPE "public"."qualitycontrolsteps_enum" AS ENUM ('Moderate', 'Strong', 'Weak');
+ CREATE TYPE "public"."resourceallocstate_enum" AS ENUM ('Limited', 'Critical', 'Sufficient');
+ CREATE TYPE "public"."riskmitigationsteps_enum" AS ENUM ('Insufficient', 'Partial', 'Adequate');
+ CREATE TYPE "public"."routeoptstatus_enum" AS ENUM ('In Progress', 'Optimized', 'Required');
+ CREATE TYPE "public"."safetyranking_enum" AS ENUM ('Safe', 'Moderate', 'High Risk');
+ CREATE TYPE "public"."vulnerabilityreview_enum" AS ENUM ('Complete', 'Pending', 'In Progress');
+

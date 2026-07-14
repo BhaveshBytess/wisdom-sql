@@ -116,20 +116,93 @@ Other limits: one model (`mistral-small-latest`), one benchmark family (BIRD), k
 2. **Scale n.** 50 → 500. Two tasks should not be carrying a headline.
 3. **Test the second-order version of the same question:** do the *persisted context fragments* generalize to unseen questions, or do they only memorize the ones they were learned on? That is the same leak, one level up — and it's the one that decides whether "context learning" compounds or just caches.
 
-## A note on the benchmark
+---
+
+# Part 2 — LiveSQLBench: one thing that worked, one that didn't
 
 I originally built this for **LiveSQLBench**, the benchmark WisdomAI publishes its numbers on. I couldn't: **the BIRD team withholds the ground-truth SQL, explicitly "to avoid data leakage."**
 
-Which is a nice irony to run into on day one of an experiment about whether a feedback signal leaks the ground truth. **The benchmark's designers are worried about exactly the thing this repo is trying to measure.**
+Which is a nice irony to hit on day one of an experiment about whether a feedback signal leaks the ground truth. **The benchmark's designers are afraid of precisely the thing this repo measures.**
 
-So this runs on BIRD, from the same team, where the gold SQL is public.
+So I asked them for it, and they sent it. Here is what happened next — **both halves, including the half that failed.**
+
+## ✅ What worked: 9.5% of LiveSQLBench's gold answers are questionable
+
+WisdomAI's CTO hand-audited his own benchmark's ground truth and published what he found: `solar_panel_3` returning **−161.87 watts** (physically impossible), `solar_panel_17` returning an **empty result**. He reported an *estimated* error rate.
+
+**So I automated it.** Execute every gold query, flag the ones whose own answer is suspect. All 391 SELECT tasks, on the real Postgres databases.
+
+| | count | rate |
+|---|---|---|
+| clean | 354 | 90.5% |
+| negative value (impossible quantity) | 31 | 7.9% |
+| all-NULL answer | 6 | 1.5% |
+| **suspect** | **37 / 391** | **9.5%** |
+
+**Every case he found by hand, the auditor found automatically:**
+
+| | his blog | this auditor |
+|---|---|---|
+| `solar_panel_3` | −161.87 watts | **NEGATIVE VALUE, min = −161.87** |
+| `solar_panel_17` | empty result | **ALL NULL** |
+| `solar_panel_1` | *(not reported)* | **ALL NULL** |
+
+**Plus 34 more he never reported.** He published an *estimate*; this is a *measurement*.
+
+**Why it matters:** if a task's gold answer is wrong, **no system can be "correct" on it.** Every accuracy number on this benchmark — anyone's — is quietly capped by this rate. It's the first question an eval-literate person should ask, and now it has a number.
+
+*(A false-positive note, because it nearly caught me: my first auditor flagged **40%**. The bug — LiveSQLBench's `Management` tasks are CRUD statements that return no result set, and I was calling "no rows to fetch" a broken ground truth. **An auditor that cries wolf is worse than no auditor.** Restricted to SELECT tasks, the honest rate is 9.5% — and it still catches every case he found.)*
+
+## ❌ What failed: the selection experiment cannot run on LiveSQLBench with a free model
+
+I tried to re-run the whole A/B/C experiment on LiveSQLBench at n=391. **It produced garbage, and the garbage looked like a finding.**
+
+The first run printed a confident headline — *"100% of the feedback lift disappears!"* — computed on top of this:
+
+| | |
+|---|---|
+| ceiling (a correct candidate exists at all) | **0.028** |
+| tasks with any correct candidate | **11 / 391** |
+
+**A selection experiment is meaningless if nothing correct is ever generated.** With a ceiling of 2.8%, there is nothing to select *from*, and every selector number downstream is noise wearing a lab coat. **The script had no idea it was lying.**
+
+I hypothesised the cause was a bug of mine: I'd passed an **empty string** where LiveSQLBench's hierarchical knowledge base should go — and that KB is the whole premise of the benchmark (a question asks for "Specific Yield"; the KB holds the formula). So I built [`src/hkb.py`](src/hkb.py) to resolve it properly, multi-hop, and [`src/ceiling_gate.py`](src/ceiling_gate.py) to test the fix **before** trusting any selector number again.
+
+**The gate killed my hypothesis:**
+
+| | ceiling |
+|---|---|
+| without the knowledge base (my bug) | 0.033 |
+| **with the knowledge base (the "fix")** | **0.000** |
+
+The KB wasn't the problem. **`mistral-small` simply cannot do LiveSQLBench.** The public leaderboard SOTA is **~48%** — with frontier models. A small free model is at zero.
+
+**So I stopped.** The n=391 selection result is dead and stays dead. I'm not swapping knobs until a number appears; that is exactly how the broken headline happened in the first place.
+
+**This retroactively justifies the substrate.** The honest reason this experiment lives on BIRD isn't just "LiveSQLBench withholds its ground truth." It's that **even with the ground truth, LiveSQLBench is unrunnable on free models — so any selector number there would be noise.**
+
+> **The lesson, and it's uncomfortable given what this repo is about:** I built a leakage detector, then leaked a broken harness straight into my own headline. The ceiling gate now runs first, permanently. **Measure whether the thing can happen at all, before measuring which method makes it happen best.**
 
 ## Run it
+
+**The main experiment (BIRD — this is the one the findings come from):**
 
 ```bash
 pip install -r requirements.txt
 cp .env.example .env      # add a free Mistral key: https://console.mistral.ai/api-keys
-python src/run_experiment.py
+python src/run_experiment.py     # the A/B/C leakage experiment
+python src/ablate.py             # which component of the signal carries the leak
 ```
 
-Checkpointed and resumable — every task is persisted the moment it's gathered. *(Learned that the hard way: a free-tier daily token cap killed a run mid-flight and threw away every completed task.)*
+**The LiveSQLBench ground-truth audit** (needs the GT, which is deliberately **not** in this repo — request it from `bird.bench25@gmail.com`, subject `[livesqlbench-base-full-v1 GT&Test Cases]`, then restore the Postgres dumps):
+
+```bash
+python src/gt_audit.py           # 9.5% of gold answers are suspect
+python src/ceiling_gate.py       # why the selection experiment can't run here
+```
+
+Checkpointed and resumable — every task is persisted the moment it's gathered. *(Learned the hard way: a free-tier daily token cap killed a run mid-flight and discarded every completed task.)*
+
+## ⛔ A note on the ground truth
+
+**The LiveSQLBench ground truth is not in this repo, and must never be.** The BIRD team sends it privately, explicitly *"to avoid data leakage by auto-crawling."* Publishing it would contaminate the benchmark for everyone — the exact harm they guard against, in a project that exists to study leakage. It lives in a gitignored directory. Request your own copy; they answer quickly.

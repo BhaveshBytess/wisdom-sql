@@ -1,0 +1,229 @@
+{
+  "n_tasks": 391,
+  "n_flagged": 37,
+  "rate": 0.09462915601023018,
+  "flags": [
+    {
+      "id": "solar_panel_1",
+      "db": "solar_panel",
+      "flag": "ALL NULL",
+      "detail": "gold answer is entirely NULL"
+    },
+    {
+      "id": "solar_panel_3",
+      "db": "solar_panel",
+      "flag": "NEGATIVE VALUE",
+      "detail": "min = -161.87"
+    },
+    {
+      "id": "solar_panel_17",
+      "db": "solar_panel",
+      "flag": "ALL NULL",
+      "detail": "gold answer is entirely NULL"
+    },
+    {
+      "id": "archeology_scan_3",
+      "db": "archeology_scan",
+      "flag": "NEGATIVE VALUE",
+      "detail": "min = -51.54"
+    },
+    {
+      "id": "archeology_scan_7",
+      "db": "archeology_scan",
+      "flag": "NEGATIVE VALUE",
+      "detail": "min = -51.50"
+    },
+    {
+      "id": "cross_border_12",
+      "db": "cross_border",
+      "flag": "NEGATIVE VALUE",
+      "detail": "min = -3806.79"
+    },
+    {
+      "id": "crypto_exchange_2",
+      "db": "crypto_exchange",
+      "flag": "NEGATIVE VALUE",
+      "detail": "min = -168.87"
+    },
+    {
+      "id": "crypto_exchange_3",
+      "db": "crypto_exchange",
+      "flag": "NEGATIVE VALUE",
+      "detail": "min = -205566.99"
+    },
+    {
+      "id": "crypto_exchange_5",
+      "db": "crypto_exchange",
+      "flag": "NEGATIVE VALUE",
+      "detail": "min = -26051096.00"
+    },
+    {
+      "id": "crypto_exchange_7",
+      "db": "crypto_exchange",
+      "flag": "NEGATIVE VALUE",
+      "detail": "min = -47559.16"
+    },
+    {
+      "id": "crypto_exchange_9",
+      "db": "crypto_exchange",
+      "flag": "NEGATIVE VALUE",
+      "detail": "min = -19.70"
+    },
+    {
+      "id": "crypto_exchange_18",
+      "db": "crypto_exchange",
+      "flag": "NEGATIVE VALUE",
+      "detail": "min = -6.93"
+    },
+    {
+      "id": "polar_equipment_3",
+      "db": "polar_equipment",
+      "flag": "NEGATIVE VALUE",
+      "detail": "min = -99.07"
+    },
+    {
+      "id": "polar_equipment_6",
+      "db": "polar_equipment",
+      "flag": "NEGATIVE VALUE",
+      "detail": "min = -2990.32"
+    },
+    {
+      "id": "polar_equipment_8",
+      "db": "polar_equipment",
+      "flag": "NEGATIVE VALUE",
+      "detail": "min = -116.80"
+    },
+    {
+      "id": "polar_equipment_14",
+      "db": "polar_equipment",
+      "flag": "NEGATIVE VALUE",
+      "detail": "min = -58.44"
+    },
+    {
+      "id": "polar_equipment_15",
+      "db": "polar_equipment",
+      "flag": "NEGATIVE VALUE",
+      "detail": "min = -24.70"
+    },
+    {
+      "id": "polar_equipment_17",
+      "db": "polar_equipment",
+      "flag": "NEGATIVE VALUE",
+      "detail": "min = -59.58"
+    },
+    {
+      "id": "polar_equipment_19",
+      "db": "polar_equipment",
+      "flag": "NEGATIVE VALUE",
+      "detail": "min = -15.80"
+    },
+    {
+      "id": "sports_events_9",
+      "db": "sports_events",
+      "flag": "NEGATIVE VALUE",
+      "detail": "min = -11.00"
+    },
+    {
+      "id": "labor_certification_applications_5",
+      "db": "labor_certification_applications",
+      "flag": "NEGATIVE VALUE",
+      "detail": "min = -14.58"
+    },
+    {
+      "id": "virtual_idol_10",
+      "db": "virtual_idol",
+      "flag": "ALL NULL",
+      "detail": "gold answer is entirely NULL"
+    },
+    {
+      "id": "reverse_logistics_4",
+      "db": "reverse_logistics",
+      "flag": "NEGATIVE VALUE",
+      "detail": "min = -256.47"
+    },
+    {
+      "id": "reverse_logistics_17",
+      "db": "reverse_logistics",
+      "flag": "NEGATIVE VALUE",
+      "detail": "min = -14127.08"
+    },
+    {
+      "id": "exchange_traded_funds_2",
+      "db": "exchange_traded_funds",
+      "flag": "NEGATIVE VALUE",
+      "detail": "min = -0.06"
+    },
+    {
+      "id": "exchange_traded_funds_4",
+      "db": "exchange_traded_funds",
+      "flag": "NEGATIVE VALUE",
+      "detail": "min = -0.39"
+    },
+    {
+      "id": "exchange_traded_funds_6",
+      "db": "exchange_traded_funds",
+      "flag": "NEGATIVE VALUE",
+      "detail": "min = -20.78"
+    },
+    {
+      "id": "exchange_traded_funds_8",
+      "db": "exchange_traded_funds",
+      "flag": "NEGATIVE VALUE",
+      "detail": "min = -5.02"
+    },
+    {
+      "id": "exchange_traded_funds_9",
+      "db": "exchange_traded_funds",
+      "flag": "NEGATIVE VALUE",
+      "detail": "min = -0.00"
+    },
+    {
+      "id": "disaster_relief_5",
+      "db": "disaster_relief",
+      "flag": "NEGATIVE VALUE",
+      "detail": "min = -324.50"
+    },
+    {
+      "id": "households_7",
+      "db": "households",
+      "flag": "NEGATIVE VALUE",
+      "detail": "min = -151.00"
+    },
+    {
+      "id": "households_12",
+      "db": "households",
+      "flag": "ALL NULL",
+      "detail": "gold answer is entirely NULL"
+    },
+    {
+      "id": "museum_artifact_10",
+      "db": "museum_artifact",
+      "flag": "NEGATIVE VALUE",
+      "detail": "min = -2475.72"
+    },
+    {
+      "id": "fake_account_14",
+      "db": "fake_account",
+      "flag": "NEGATIVE VALUE",
+      "detail": "min = -1.02"
+    },
+    {
+      "id": "fake_account_18",
+      "db": "fake_account",
+      "flag": "ALL NULL",
+      "detail": "gold answer is entirely NULL"
+    },
+    {
+      "id": "cold_chain_pharma_compliance_14",
+      "db": "cold_chain_pharma_compliance",
+      "flag": "ALL NULL",
+      "detail": "gold answer is entirely NULL"
+    },
+    {
+      "id": "cold_chain_pharma_compliance_17",
+      "db": "cold_chain_pharma_compliance",
+      "flag": "NEGATIVE VALUE",
+      "detail": "min = -40.00"
+    }
+  ]
+}

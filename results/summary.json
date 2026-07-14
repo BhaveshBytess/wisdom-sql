@@ -1,0 +1,9 @@
+{
+  "n": 50,
+  "k": 5,
+  "first": 0.58,
+  "cond_c_selfconsistency": 0.58,
+  "cond_b_human": 0.6,
+  "cond_a_oracle": 0.64,
+  "oracle_max": 0.64
+}

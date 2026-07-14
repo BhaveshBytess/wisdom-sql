@@ -1,16 +1,26 @@
+# secrets
 .env
-__pycache__/
-*.pyc
-data/*.sqlite
-data/*.zip
-.venv/
 
 # ⛔ NEVER COMMIT. The BIRD team sends the LiveSQLBench ground truth PRIVATELY,
-# explicitly "to avoid data leakage by auto-crawling". Publishing it to a public
-# repo would contaminate the benchmark for everyone -- the exact harm they guard
-# against, in a project that exists to study leakage. Do not remove this rule.
+# explicitly "to avoid data leakage by auto-crawling". Publishing it would
+# contaminate the benchmark for everyone — the exact harm they guard against,
+# in a project that exists to study leakage. Do not remove this rule.
 data/private/
 *_gt_*.jsonl
 livesqlbench_base_full_v1_gt*
+
+# third-party datasets and databases: DOWNLOADED, not vendored.
+# see the README for how to fetch them. keeping them out keeps the repo
+# reviewable, and keeps us from redistributing someone else's benchmark.
+data/
 pg/
-data/pgdata/
+*.sqlite
+*.zip
+
+# large run logs; the summarised results/*.json are committed instead
+*_run.log
+results/*.jsonl
+
+__pycache__/
+*.pyc
+.venv/
